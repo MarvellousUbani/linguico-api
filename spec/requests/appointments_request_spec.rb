@@ -4,11 +4,16 @@ RSpec.describe "Appointments", type: :request do
  # initialize test data 
  let!(:appointments) { create_list(:appointment, 10) }
  let(:appointment_id) { appointments.first.id }
+ let(:student) {create_list(:student, 2)}
+ let(:student_id) {student.first.id}
+ let(:teacher) {create_list(:teacher, 2)}
+ let(:teacher_id) {teacher.first.id}
+
 
  # Test suite for GET /appointments
  describe 'GET /appointments' do
    # make HTTP get request before each example
-   before { get '/appointments' }
+   before { get "/api/v1/students/#{student_id}/appointments/" }
 
    it 'returns appointments' do
      # Note `json` is a custom helper to parse JSON responses
@@ -23,7 +28,7 @@ RSpec.describe "Appointments", type: :request do
 
  # Test suite for GET /appointments/:id
  describe 'GET /appointments/:id' do
-   before { get "/appointments/#{appointment_id}" }
+   before { get "/api/v1/students/#{student_id}/appointments/#{appointment_id}" }
 
    context 'when the record exists' do
      it 'returns the appointment' do
@@ -53,16 +58,13 @@ RSpec.describe "Appointments", type: :request do
  describe 'POST /appointments' do
    # valid payload
    
-
-   let(:valid_attributes) { { desc: 'Practice TEF French', appointment_date: Date.parse('2020-09-20'), appointment_time:Time.parse("20/9/2020 15:00:00"), teacher: create(:teacher,name:"Bob Hanson", email:"bob@gmail.com",
-    password_digest:"florabi", languages:{"french":true}), student: create(:student,name:"Marian Hanson", email:"marian@gmail.com",
-    password_digest:"florabi") } }
+   let(:valid_attributes) { { desc: 'Practice TEF French', appointment_date: Date.parse('2020-09-20'), appointment_time:Time.parse("20/9/2020 15:00:00"),
+                              student_id:student_id, teacher_id: teacher_id } }
 
    context 'when the request is valid' do
-     before { post '/appointments', params: valid_attributes }
+     before { post "/api/v1/students/#{student_id}/appointments", params: valid_attributes }
 
      it 'creates a appointment' do
-       p json
        expect(json['desc']).to eq('Practice TEF French')
      end
 
@@ -72,7 +74,7 @@ RSpec.describe "Appointments", type: :request do
    end
 
    context 'when the request is invalid' do
-     before { post '/appointments', params: { desc: 'Foobar' } }
+     before { post "/api/v1/students/#{student_id}/appointments", params: { desc: 'Foobar' } }
 
      it 'returns status code 422' do
        expect(response).to have_http_status(422)
@@ -80,7 +82,7 @@ RSpec.describe "Appointments", type: :request do
 
      it 'returns a validation failure message' do
        expect(response.body)
-         .to match(/Validation failed: Student must exist, Teacher must exist, Appointment date can't be blank, Appointment time can't be blank/)
+         .to match(/Teacher must exist, Appointment date can't be blank, Appointment time can't be blank/)
      end
    end
  end
@@ -90,7 +92,7 @@ RSpec.describe "Appointments", type: :request do
    let(:valid_attributes) { { desc: 'Learn IELTS English' } }
 
    context 'when the record exists' do
-     before { put "/appointments/#{appointment_id}", params: valid_attributes }
+     before { put "/api/v1/students/#{student_id}/appointments/#{appointment_id}", params: valid_attributes }
 
      it 'updates the record' do
        expect(response.body).to be_empty
@@ -104,7 +106,7 @@ RSpec.describe "Appointments", type: :request do
 
  # Test suite for DELETE /appointments/:id
  describe 'DELETE /appointments/:id' do
-   before { delete "/appointments/#{appointment_id}" }
+   before { delete "/api/v1/students/#{student_id}/appointments/#{appointment_id}" }
 
    it 'returns status code 204' do
      expect(response).to have_http_status(204)
