@@ -44,7 +44,7 @@ RSpec.describe "Appointments", type: :request do
      end
 
      it 'returns a not found message' do
-       expect(response.body).to match(/Couldn't find appointment/)
+       expect(response.body).to match(/Couldn't find Appointment with 'id'=100/)
      end
    end
  end
@@ -52,12 +52,17 @@ RSpec.describe "Appointments", type: :request do
  # Test suite for POST /appointments
  describe 'POST /appointments' do
    # valid payload
-   let(:valid_attributes) { { desc: 'Practice TEF French', appointment_date: Date.parse('2020-09-20'), appointment_time:Time.parse("20/9/2020 15:00:00"), teacher_id: 1 } }
+   
+
+   let(:valid_attributes) { { desc: 'Practice TEF French', appointment_date: Date.parse('2020-09-20'), appointment_time:Time.parse("20/9/2020 15:00:00"), teacher: create(:teacher,name:"Bob Hanson", email:"bob@gmail.com",
+    password_digest:"florabi", languages:{"french":true}), student: create(:student,name:"Marian Hanson", email:"marian@gmail.com",
+    password_digest:"florabi") } }
 
    context 'when the request is valid' do
      before { post '/appointments', params: valid_attributes }
 
      it 'creates a appointment' do
+       p json
        expect(json['desc']).to eq('Practice TEF French')
      end
 
@@ -75,7 +80,7 @@ RSpec.describe "Appointments", type: :request do
 
      it 'returns a validation failure message' do
        expect(response.body)
-         .to match(/Validation failed: Created by can't be blank/)
+         .to match(/Validation failed: Student must exist, Teacher must exist, Appointment date can't be blank, Appointment time can't be blank/)
      end
    end
  end

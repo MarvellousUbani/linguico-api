@@ -1,17 +1,15 @@
 class AppointmentsController < ApplicationController
-    # app/controllers/appointments_controller.rb
-class appointmentsController < ApplicationController
     before_action :set_appointment, only: [:show, :update, :destroy]
   
     # GET /appointments
     def index
-      @appointments = appointment.all
+      @appointments = Appointment.all
       json_response(@appointments)
     end
   
     # POST /appointments
     def create
-      @appointment = appointment.create!(appointment_params)
+      @appointment = Appointment.create!(appointment_params)
       json_response(@appointment, :created)
     end
   
@@ -40,7 +38,6 @@ class appointmentsController < ApplicationController
     end
   
     def set_appointment
-      @appointment = appointment.find(params[:id])
+      @appointment = Appointment.find(params[:id])
     end
-  end
 end
