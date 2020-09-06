@@ -11,7 +11,6 @@ RSpec.describe 'Students API', type: :request do
       before { post '/api/v1/students', params: valid_attributes.to_json, headers: headers }
 
       it 'creates a new student' do
-        p student
         expect(response).to have_http_status(201)
       end
 

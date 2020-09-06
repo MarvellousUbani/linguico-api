@@ -3,13 +3,13 @@ class Api::V1::AppointmentsController < ApplicationController
   
     # GET /appointments
     def index
-      @appointments = Appointment.all
+      @appointments = current_user.appointments
       json_response(@appointments)
     end
   
     # POST /appointments
     def create
-      @appointment = Appointment.create!(appointment_params)
+      @appointment = current_user.appointments.create!(appointment_params)
       # @appointment = Student.first.appointments.build(appointment_params)
       json_response(@appointment, :created)
     end

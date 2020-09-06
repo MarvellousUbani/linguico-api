@@ -1,4 +1,5 @@
 class Api::V1::StudentsController < ApplicationController
+  skip_before_action :authorize_request, only: :create
   before_action :set_student, only: [:show, :update, :destroy]
   # GET /students
   def index
