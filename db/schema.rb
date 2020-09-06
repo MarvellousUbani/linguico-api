@@ -12,12 +12,15 @@
 
 ActiveRecord::Schema.define(version: 2020_09_03_234249) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "appointments", force: :cascade do |t|
     t.string "desc"
     t.datetime "appointment_time"
     t.datetime "appointment_date"
-    t.integer "student_id"
-    t.integer "teacher_id"
+    t.bigint "student_id"
+    t.bigint "teacher_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["student_id"], name: "index_appointments_on_student_id"
@@ -46,4 +49,6 @@ ActiveRecord::Schema.define(version: 2020_09_03_234249) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "appointments", "students"
+  add_foreign_key "appointments", "teachers"
 end
