@@ -1,11 +1,12 @@
-# spec/auth/authorize_api_request_spec.rb
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe AuthorizeApiRequest do
-  # Create test student
-  let(:student) { create(:student) }
+  # Create test user
+  let(:user) { create(:user) }
   # Mock `Authorization` header
-  let(:header) { { 'Authorization' => token_generator(student.id) } }
+  let(:header) { { 'Authorization' => token_generator(user.id) } }
   # Invalid request subject
   subject(:invalid_request_obj) { described_class.new({}) }
   # Valid request subject
@@ -14,15 +15,16 @@ RSpec.describe AuthorizeApiRequest do
   # Test Suite for AuthorizeApiRequest#call
   # This is our entry point into the service class
   describe '#call' do
-    # returns student object when request is valid
+    # returns user object when request is valid
     context 'when valid request' do
-      it 'returns student object' do
+      it 'returns user object' do
         result = request_obj.call
-        expect(result[:student]).to eq(student)
+        expect(result[:user]).to eq(user)
       end
     end
 
     # returns error message when invalid request
+    # rubocop:disable Metrics/BlockLength
     context 'when invalid request' do
       context 'when missing token' do
         it 'raises a MissingToken error' do
@@ -44,7 +46,7 @@ RSpec.describe AuthorizeApiRequest do
       end
 
       context 'when token is expired' do
-        let(:header) { { 'Authorization' => expired_token_generator(student.id) } }
+        let(:header) { { 'Authorization' => expired_token_generator(user.id) } }
         subject(:request_obj) { described_class.new(header) }
 
         it 'raises ExceptionHandler::ExpiredSignature error' do
@@ -69,5 +71,6 @@ RSpec.describe AuthorizeApiRequest do
         end
       end
     end
+    # rubocop:enable Metrics/BlockLength
   end
 end

@@ -4,15 +4,15 @@ require 'rails_helper'
 RSpec.describe 'Authentication', type: :request do
   # Authentication test suite
   describe 'POST /auth/login' do
-    # create test student
-    let!(:student) { create(:student) }
+    # create test user
+    let!(:user) { create(:user) }
     # set headers for authorization
     let(:headers) { valid_headers.except('Authorization') }
     # set test valid and invalid credentials
     let(:valid_credentials) do
       {
-        email: student.email,
-        password: student.password
+        email: user.email,
+        password: user.password
       }.to_json
     end
     let(:invalid_credentials) do

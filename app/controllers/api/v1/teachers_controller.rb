@@ -1,6 +1,8 @@
 class Api::V1::TeachersController < ApplicationController
     # skip_before_action :authorize_request, only: :create
     before_action :set_teacher, only: [:show, :update, :destroy]
+    # before_action :is_admin?, only: [:create, :update, :destroy]
+
     # GET /teachers
     def index
         @teachers = Teacher.all
@@ -10,8 +12,12 @@ class Api::V1::TeachersController < ApplicationController
     # POST /api/v1/teachers
     # return authenticated token upon create
     def create
-      teacher = Teacher.create!(teacher_params)
-      json_response(response, :created)
+      if current_user.admin?
+        teacher = Teacher.create!(teacher_params)
+        json_response(response, :created)
+      else
+        render(json: { message: Message.unauthorized }, status: 401)
+      end
     end
   
     # GET /api/v1/teachers/:id
@@ -21,14 +27,22 @@ class Api::V1::TeachersController < ApplicationController
   
     # PUT /api/v1/teachers/:id
     def update
-      @teacher.update(teacher_params)
-      head :no_content
+      if current_user.admin?
+        @teacher.update(teacher_params)
+        head :no_content
+      else
+        render(json: { message: Message.unauthorized }, status: 401)
+      end
     end
   
     # DELETE /api/v1/teachers/:id
     def destroy
-      @teacher.destroy
-      head :no_content
+      if current_user.admin?
+        @teacher.destroy
+        head :no_content
+      else
+        render(json: { message: Message.unauthorized }, status: 401)
+      end
     end
   
     private
@@ -40,5 +54,6 @@ class Api::V1::TeachersController < ApplicationController
     def set_teacher
       @teacher = Teacher.find(params[:id])
     end
+
   end
   

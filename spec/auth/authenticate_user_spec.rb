@@ -1,15 +1,15 @@
-# spec/auth/authenticate_student_spec.rb
+# spec/auth/authenticate_user_spec.rb
 require 'rails_helper'
 
-RSpec.describe AuthenticateStudent do
-  # create test student
-  let(:student) { create(:student) }
+RSpec.describe AuthenticateUser do
+  # create test user
+  let(:user) { create(:user) }
   # valid request subject
-  subject(:valid_auth_obj) { described_class.new(student.email, student.password) }
+  subject(:valid_auth_obj) { described_class.new(user.email, user.password) }
   # invalid request subject
   subject(:invalid_auth_obj) { described_class.new('foo', 'bar') }
 
-  # Test suite for AuthenticateStudent#call
+  # Test suite for Authenticateuser#call
   describe '#call' do
     # return token when valid request
     context 'when valid credentials' do

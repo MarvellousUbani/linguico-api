@@ -4,7 +4,7 @@ class CreateAppointments < ActiveRecord::Migration[5.2]
       t.string :desc
       t.datetime :appointment_time
       t.datetime :appointment_date
-      t.references :student, foreign_key: true
+      t.references :user, foreign_key: true
       t.references :teacher, foreign_key: true
 
       t.timestamps

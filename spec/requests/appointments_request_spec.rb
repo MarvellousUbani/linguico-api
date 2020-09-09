@@ -2,12 +2,13 @@ require 'rails_helper'
 
 RSpec.describe "Appointments", type: :request do
  # initialize test data 
- let!(:appointments) { create_list(:appointment, 10) }
- let(:appointment_id) { appointments.first.id }
- let(:student) {create_list(:student, 2)}
- let(:student_id) {student.first.id}
- let(:teacher) {create_list(:teacher, 2)}
- let(:teacher_id) {teacher.first.id}
+
+ let!(:user) { FactoryBot.create(:user) }
+ let(:user_id) {user.id}
+ let(:teacher) {create(:teacher)}
+ let(:teacher_id) {teacher.id}
+ let!(:appointments) {Appointment.create({desc:"To learn for Spanish", appointment_date:Date.parse('2020-09-20'), appointment_time:Time.parse("20/9/2020 15:00:00"), teacher_id:teacher_id,user_id:user_id}) }
+ let(:appointment_id) { appointments.id }
  let(:headers) { valid_headers.except('Content-Type') }
 
 
@@ -18,8 +19,9 @@ RSpec.describe "Appointments", type: :request do
 
    it 'returns appointments' do
      # Note `json` is a custom helper to parse JSON responses
+     p json
      expect(json).not_to be_empty
-     expect(json.size).to eq(10)
+     expect(json.size).to eq(1)
    end
 
    it 'returns status code 200' do
@@ -60,7 +62,7 @@ RSpec.describe "Appointments", type: :request do
    # valid payload
    
    let(:valid_attributes) { { desc: 'Practice TEF French', appointment_date: Date.parse('2020-09-20'), appointment_time:Time.parse("20/9/2020 15:00:00"),
-                              student_id:student_id, teacher_id: teacher_id } }
+                              user_id:user_id, teacher_id: teacher_id } }
 
    context 'when the request is valid' do
      before { post "/api/v1/appointments", params: valid_attributes, headers: headers}

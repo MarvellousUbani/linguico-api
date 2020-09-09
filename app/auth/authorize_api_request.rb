@@ -3,10 +3,10 @@ class AuthorizeApiRequest
       @headers = headers
     end
   
-    # Service entry point - return valid student object
+    # Service entry point - return valid user object
     def call
       {
-        student: student
+        user: user
       }
     end
   
@@ -14,11 +14,11 @@ class AuthorizeApiRequest
   
     attr_reader :headers
   
-    def student
-      # check if student is in the database
-      # memoize student object
-      @student ||= Student.find(decoded_auth_token[:student_id]) if decoded_auth_token
-      # handle student not found
+    def user
+      # check if user is in the database
+      # memoize user object
+      @user ||= User.find(decoded_auth_token[:user_id]) if decoded_auth_token
+      # handle user not found
     rescue ActiveRecord::RecordNotFound => e
       # raise custom error
       raise(

@@ -1,16 +1,16 @@
 require 'rails_helper'
 
-RSpec.describe 'Students API', type: :request do
-  let(:student) { build(:student) }
+RSpec.describe 'Users API', type: :request do
+  let(:user) { build(:user) }
   let(:headers) { valid_headers.except('Authorization') }
-  let(:valid_attributes) { { name: student.name, email: student.email, password: student.password, password_confirmation: student.password } }
+  let(:valid_attributes) { { name: user.name, email: user.email, password: user.password, password_confirmation: user.password } }
 
-  # Student signup test suite
-  describe 'POST /api/v1/students' do
+  # user signup test suite
+  describe 'POST /api/v1/users' do
     context 'when valid request' do
-      before { post '/api/v1/students', params: valid_attributes.to_json, headers: headers }
+      before { post '/api/v1/users', params: valid_attributes.to_json, headers: headers }
 
-      it 'creates a new student' do
+      it 'creates a new user' do
         expect(response).to have_http_status(201)
       end
 
@@ -24,9 +24,9 @@ RSpec.describe 'Students API', type: :request do
     end
 
     context 'when invalid request' do
-      before { post '/api/v1/students', params: {}, headers: headers }
+      before { post '/api/v1/users', params: {}, headers: headers }
 
-      it 'does not create a new student' do
+      it 'does not create a new user' do
         expect(response).to have_http_status(422)
       end
 

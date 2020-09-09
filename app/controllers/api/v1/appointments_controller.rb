@@ -10,7 +10,7 @@ class Api::V1::AppointmentsController < ApplicationController
     # POST /appointments
     def create
       @appointment = current_user.appointments.create!(appointment_params)
-      # @appointment = Student.first.appointments.build(appointment_params)
+      # @appointment = User.first.appointments.build(appointment_params)
       json_response(@appointment, :created)
     end
   
@@ -35,7 +35,7 @@ class Api::V1::AppointmentsController < ApplicationController
   
     def appointment_params
       # whitelist params
-      params.permit(:desc, :appointment_date, :appointment_time, :student_id, :teacher_id)
+      params.permit(:desc, :appointment_date, :appointment_time, :user_id, :teacher_id)
     end
   
     def set_appointment

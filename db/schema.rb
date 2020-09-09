@@ -19,23 +19,12 @@ ActiveRecord::Schema.define(version: 2020_09_03_234249) do
     t.string "desc"
     t.datetime "appointment_time"
     t.datetime "appointment_date"
-    t.bigint "student_id"
+    t.bigint "user_id"
     t.bigint "teacher_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["student_id"], name: "index_appointments_on_student_id"
     t.index ["teacher_id"], name: "index_appointments_on_teacher_id"
-  end
-
-  create_table "students", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "password_digest"
-    t.text "bio"
-    t.text "languages"
-    t.string "nationality"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_appointments_on_user_id"
   end
 
   create_table "teachers", force: :cascade do |t|
@@ -49,6 +38,18 @@ ActiveRecord::Schema.define(version: 2020_09_03_234249) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "appointments", "students"
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "password_digest"
+    t.text "bio"
+    t.text "languages"
+    t.string "nationality"
+    t.integer "role", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "appointments", "teachers"
+  add_foreign_key "appointments", "users"
 end

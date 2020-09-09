@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe Appointment, type: :model do
     # Association test
     # ensure Todo model has a 1:m relationship with the Item model
-    it { should belong_to(:student)}
+    it { should belong_to(:user)}
     it { should belong_to(:teacher)}
     # Validation tests
     # ensure columns title and created_by are present before saving
