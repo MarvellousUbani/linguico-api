@@ -19,7 +19,6 @@ RSpec.describe "Appointments", type: :request do
 
    it 'returns appointments' do
      # Note `json` is a custom helper to parse JSON responses
-     p json
      expect(json).not_to be_empty
      expect(json.size).to eq(1)
    end
