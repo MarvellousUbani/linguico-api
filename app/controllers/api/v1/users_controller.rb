@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class Api::V1::UsersController < ApplicationController
   skip_before_action :authorize_request, only: :create
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: %i[show update destroy]
   # GET /users
   def index
-      @users = User.all
-      json_response(@users)
+    @users = User.all
+    json_response(@users)
     end
 
   # POST /api/v1/users
