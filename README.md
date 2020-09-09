@@ -9,6 +9,9 @@
 
 The api documentation is Live at https://linguicoapi.docs.apiary.io/
 
+### Live Version
+[Click Here](#)
+
 # Book an Appointment RESTful API
 
 This is a backend-only project. Consists in an API REST for a car sale service. It allows the client app to offer the following workflow to the end user:
