@@ -30,7 +30,7 @@ Style/HashTransformKeys:
 Style/HashTransformValues:
   Enabled: false
 Layout/LineLength:
-  Enabled: false
+  Max: 1000
 Layout/EndAlignment:
   Enabled: false
 Layout/DefEndAlignment:
