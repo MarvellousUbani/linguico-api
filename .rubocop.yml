@@ -30,7 +30,7 @@ Style/HashTransformKeys:
 Style/HashTransformValues:
   Enabled: false
 Layout/LineLength:
-  Max: 1000
+  Enabled: false
 Layout/EndAlignment:
   Enabled: false
 Layout/DefEndAlignment:
@@ -53,5 +53,3 @@ Layout/ExtraSpacing:
 Layout/MultilineMethodCallIndentation:
   Enabled: true
   EnforcedStyle: indented
-Layout/LineLength:
-  Max: 120
