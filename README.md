@@ -2,7 +2,7 @@
 
 
 ### ERD
-![Screenshot from 2020-09-06 10-14-29](https://user-images.githubusercontent.com/53324035/92329320-585df000-f02c-11ea-9545-71c5c06667d8.png)
+![dbdiagram](https://user-images.githubusercontent.com/17970203/92890284-d410c180-f3cb-11ea-92c5-e5d8fa442480.png)
 
 
 ## API Documentation
@@ -68,14 +68,21 @@ bundle install
   sudo -u postgres psql
 ```
   (Exit postgres console with \q) 
+  
+8. Once you are done following the previous steps you should run:
 
-8. Start your web server:
+```
+rails db:create to create the local database.
+rake db:migrate to run any pending migrations.
+```
+
+9. Start your web server:
 ```
    rails s
 ```
-9. Login using postman on **localhost:3000/auth/login**
+10. Login using postman on **localhost:3000/auth/login**
 
-10. Read the documentation to know the way to make the requests properly
+11. Read the documentation to know the way to make the requests properly
 
 11. To run the automated unit tests use the following command:
 ```
